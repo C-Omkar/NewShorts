@@ -1,0 +1,6 @@
+pickle-mixin
+pandas
+fastai==2.5.5
+ohmeow-blurr
+transformers==4.17.0
+flask

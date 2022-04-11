@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NewShorts: The Article Summariser</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&family=Roboto&display=swap" rel="stylesheet">
+    <style>
+      /* CSS Reset Start */
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      section {
+        display: block;
+      }
+
+      body {
+        line-height: 1;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      blockquote,
+      q {
+        quotes: none;
+      }
+
+      blockquote:before,
+      blockquote:after,
+      q:before,
+      q:after {
+        content: "";
+        content: none;
+      }
+
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      /* CSS Reset End */
+
+      .wrapper {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Outfit", sans-serif;
+        background: #001219;
+        color: #e9d8a6;
+      }
+      .contentWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: fit-content;
+        gap: 1rem;
+      }
+      /* .headWrapper {
+      } */
+      .heading {
+        font-size: 3rem;
+      }
+      .form {
+        width: 100%;
+      }
+      .inputText {
+        width: 100%;
+        height: 20vh;
+        border-radius: 6px;
+        background: transparent;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        resize: none;
+        padding: 1rem;
+        border-color: #0a9396;
+      }
+      .inputText:focus {
+        outline: none !important;
+        border-color: #94d2bd;
+        box-shadow: 0 0 5px #94d2bd;
+      }
+      .resultButton {
+        padding: 1rem 3rem;
+        font-size: 1rem;
+        background: #e9d8a6;
+        border-radius: 5px;
+        border-color: #e9d8a6;
+        cursor: pointer;
+      }
+      .resultButton:hover {
+        background: transparent;
+        color: white;
+        border-color: #0a9396;
+      }
+      .outputText {
+        width: 100%;
+        height: 10vh;
+        background: transparent;
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+        resize: none;
+        padding: 1rem;
+        border-width: 0.5rem;
+        border-color: #0a9396;
+        border-top: none;
+        border-right: none;
+        border-bottom: none;
+        outline: none;
+        cursor: text;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="contentWrapper">
+        <div class="headWrapper">
+          <h1 class="heading">NewShorts: The Article Summariser</h1>
+        </div>
+        <textarea class="inputText" type="text" id="inputText" name="fname" onchange="changeText()"></textarea>
+        <button type="submit" class="resultButton" onClick="result()">Result</button>
+        <textarea id="outputText" class="outputText" value="Output..." disabled>{% block content %} {% endblock %}</textarea>
+      </div>
+    </div>
+    <script>
+      var text = "";
+      var queryString = "";
+      function changeText() {
+        text = document.getElementById('inputText').value
+        // console.log(text)
+        queryString = '/summarise?text='+text;
+      }
+      function result() {
+
+        fetch(queryString)
+        .then(res => res.json())
+        .then(json => {
+          console.log(json);
+          document.getElementById("outputText").innerHTML = JSON.stringify(json.summary)
+        })
+
+      }
+    </script>
+  </body>
+</html>
